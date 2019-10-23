@@ -4,77 +4,137 @@
 
 using namespace std;
 
-int IntH = 0, IntT = 0;
-struct Piece{
+int num_head = 0, num_tail = 0;
+
+//estrutura da peca
+struct Piece
+{
+	//lados da peca
 	int num1, num2;
 };
 
-struct Node{
+//no da lista
+struct Node
+{
 	Piece piece;
 	Node *next, *prev;
 };
-Node* create_node(Piece piece){
-	Node* new_node;
-	new_node = (Node*) malloc(sizeof(Node));
+
+//funcao que cria o no
+Node *create_node(Piece piece)
+{
+	Node *new_node;
+	new_node = (Node *)malloc(sizeof(Node));
 	new_node->piece = piece;
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return new_node;
 }
 
-class Hand{
-private:
+//classe da lista de pecas
+class ListaPecas
+{
+protected:
+	//nos que representam o inicio e fim da lista
 	Node *head, *tail;
+
 public:
+	//no do iterador
 	Node *it;
 	int number_of_pieces;
-	void initializate(){
+
+	//funcao que inica a lista
+	void initializate()
+	{
 		head = NULL;
 		tail = NULL;
-		number_of_pieces = 0;
 	}
-	void push_back(Piece piece){
-		if(head == NULL){
+
+	//funcao que adiciona itens no final da lista
+	void push_back(Piece piece)
+	{
+		if (head == NULL)
+		{
 			head = create_node(piece);
 			tail = head;
 			number_of_pieces++;
 		}
-		else{
+		else
+		{
 			tail->next = create_node(piece);
 			tail->next->prev = tail;
 			tail = tail->next;
 			number_of_pieces++;
 		}
-		
 	}
-	int removeat(int i){
-		if(i>=number_of_pieces){
-			cout<<"Invalido!\n";
+
+	//funcao que adiciona itens no inicio da lista
+	int push_front(Piece piece)
+	{
+		if (num_head != piece.num1 && num_head != piece.num2 && head != NULL)
+		{
+			cout << "Error\n";
 			return 0;
 		}
-		if(number_of_pieces == 1){
+		if (head == NULL)
+		{
+			head = create_node(piece);
+			tail = head;
+			if (num_tail == piece.num1)
+				num_head = piece.num2;
+			else
+				num_head = piece.num1;
+			return 1;
+		}
+		else
+		{
+			head->prev = create_node(piece);
+			head->prev->next = head;
+			head = head->prev;
+			if (num_head == piece.num1)
+				num_head = piece.num2;
+			else
+				num_head = piece.num1;
+			return 1;
+		}
+	}
+
+	//funcao que remove um item da lista em determinada posicao
+	int removeat(int i)
+	{
+		if (i >= number_of_pieces)
+		{
+			cout << "Invalido!\n";
+			return 0;
+		}
+		if (number_of_pieces == 1)
+		{
 			number_of_pieces--;
 			return 1;
 		}
-		if(i == 0){
-			it=head;
-			head=head->next;
+		if (i == 0)
+		{
+			it = head;
+			head = head->next;
 			head->prev = NULL;
 			number_of_pieces--;
 			free(it);
 			return 1;
 		}
-		else if(i == number_of_pieces - 1){
-			it=tail;
-			tail=tail->prev;
+		else if (i == number_of_pieces - 1)
+		{
+			it = tail;
+			tail = tail->prev;
 			tail->next = NULL;
 			number_of_pieces--;
 			free(it);
 			return 1;
 		}
-		else{
+		else
+		{
 			it = head;
-			for(int j = 0; j<i; j++){
+			for (int j = 0; j < i; j++)
+			{
 				it = it->next;
 			}
 			it->prev->next = it->next;
@@ -84,98 +144,81 @@ public:
 			return 1;
 		}
 	}
-	int won(){
-		if(!number_of_pieces)
-			return 1;
-		return 0;
-	}
-	int ispossible(){
-		it=head;
-		for(int i=0; i<number_of_pieces; i++)
-			if(it->piece.num1 == IntH || it->piece.num1 == IntT || it->piece.num2 == IntH || it->piece.num2 != IntT)
-				return 1;
-		return 0;
+
+	//funcao que imprime a lista
+	void printList()
+	{
+		it = tail;
+		for (int i = 0; i < number_of_pieces; i++)
+		{
+			cout << it->piece.num1 << " | " << it->piece.num2 << endl;
+			it = it->next;
+		}
 	}
 };
 
-class Table{
-private:
-	Node *head, *tail;
+//classe que representa o cava
+class Dig : public ListaPecas
+{
 public:
-	Node *it;
-	int number_of_pieces;
-	void initializate(){
-		head = NULL;
-		tail = NULL;
-		IntH = 0;
-		IntT = 0;
-	}
-	int push_back(Piece piece){
-		if(IntT != piece.num1 && IntT != piece.num2 && head != NULL){
-			cout<<"Error\n";
-			return 0;
-		}
-		if(head == NULL){
-			head = create_node(piece);
-			tail = head;
-			if(IntT == piece.num1)
-				IntT = piece.num2;
-			else
-				IntT = piece.num1;
-			return 1;
-		}
-		else{
-			tail->next = create_node(piece);
-			tail->next->prev = tail;
-			tail = tail->next;
-			if(IntT == piece.num1)
-				IntT = piece.num2;
-			else
-				IntT = piece.num1;
-			return 1;
-		}
-		
-	}
-	int push_front(Piece piece){
-		if(IntH != piece.num1 && IntH != piece.num2 && head != NULL){
-			cout<<"Error\n";
-			return 0;
-		}
-		if(head == NULL){
-			head = create_node(piece);
-			tail = head;
-			if(IntT == piece.num1)
-				IntH = piece.num2;
-			else
-				IntH = piece.num1;
-			return 1;
-		}
-		else{
-			head->prev = create_node(piece);
-			head->prev->next = head;
-			head = head->prev;
-			if(IntH == piece.num1)
-				IntH = piece.num2;
-			else
-				IntH = piece.num1;
-			return 1;
+	//funcao que cria as pecas
+	void createPieces()
+	{
+		Piece peca;
+		for (int i = 6; i >= 0; i--)
+		{
+			peca.num1 = i;
+			for (int j = i; j >= 0; j--)
+			{
+				peca.num2 = j;
+				push_front(peca);
+			}
 		}
 	}
-	
 };
 
-int main(){
+//classe que se refere as pecas que estao na mao do jogador
+class Hand : public ListaPecas
+{
+public:
+	int won()
+	{
+		if (!number_of_pieces)
+			return 1;
+		return 0;
+	}
+	//confere se eh possivel da pessoa jogar a peca na mesa
+	int ispossible()
+	{
+		it = head;
+		for (int i = 0; i < number_of_pieces; i++)
+			if (it->piece.num1 == num_head || it->piece.num1 == num_tail || it->piece.num2 == num_head || it->piece.num2 != num_tail)
+				return 1;
+			it = it->next;
+		return 0;
+	}
+};
+
+class Table : public ListaPecas
+{
+};
+
+int main()
+{
 	Piece a;
-	a.num1=1;
-	a.num2=2;
+	Piece b;
+	a.num1 = 1;
+	a.num2 = 2;
+	b.num1 = 3;
+	b.num2 = 4;
 	Hand Player[4];
 	Table table;
 	table.initializate();
-	for(int i=0; i<4; i++)
+	table.push_front(a);
+	table.push_front(b);
+	//table.printList();
+	for (int i = 0; i < 4; i++)
 		Player[i].initializate();
-	
-	
-	
-	
+
 	return 0;
 }
