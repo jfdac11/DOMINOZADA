@@ -1,8 +1,4 @@
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-
-using namespace std;
+#include "Global.hpp"
 
 int num_head = 0, num_tail = 0;
 
@@ -48,10 +44,12 @@ public:
 	{
 		head = NULL;
 		tail = NULL;
+		number_of_pieces = 0;
 	}
 
 	//funcao que adiciona itens no final da lista
-	void push_back(Piece piece)
+	//virtual serve para ser possivel dar override
+	virtual int push_back(Piece piece)
 	{
 		if (head == NULL)
 		{
@@ -66,37 +64,26 @@ public:
 			tail = tail->next;
 			number_of_pieces++;
 		}
+		return 1;
 	}
 
 	//funcao que adiciona itens no inicio da lista
-	int push_front(Piece piece)
+	virtual int push_front(Piece piece)
 	{
-		if (num_head != piece.num1 && num_head != piece.num2 && head != NULL)
-		{
-			cout << "Error\n";
-			return 0;
-		}
 		if (head == NULL)
 		{
 			head = create_node(piece);
 			tail = head;
-			if (num_tail == piece.num1)
-				num_head = piece.num2;
-			else
-				num_head = piece.num1;
-			return 1;
+			number_of_pieces++;
 		}
 		else
 		{
 			head->prev = create_node(piece);
 			head->prev->next = head;
 			head = head->prev;
-			if (num_head == piece.num1)
-				num_head = piece.num2;
-			else
-				num_head = piece.num1;
-			return 1;
+			number_of_pieces++;
 		}
+		return 1;
 	}
 
 	//funcao que remove um item da lista em determinada posicao
@@ -148,7 +135,7 @@ public:
 	//funcao que imprime a lista
 	void printList()
 	{
-		it = tail;
+		it = head;
 		for (int i = 0; i < number_of_pieces; i++)
 		{
 			cout << it->piece.num1 << " | " << it->piece.num2 << endl;
@@ -156,69 +143,3 @@ public:
 		}
 	}
 };
-
-//classe que representa o cava
-class Dig : public ListaPecas
-{
-public:
-	//funcao que cria as pecas
-	void createPieces()
-	{
-		Piece peca;
-		for (int i = 6; i >= 0; i--)
-		{
-			peca.num1 = i;
-			for (int j = i; j >= 0; j--)
-			{
-				peca.num2 = j;
-				push_front(peca);
-			}
-		}
-	}
-};
-
-//classe que se refere as pecas que estao na mao do jogador
-class Hand : public ListaPecas
-{
-public:
-	int won()
-	{
-		if (!number_of_pieces)
-			return 1;
-		return 0;
-	}
-	//confere se eh possivel da pessoa jogar a peca na mesa
-	int ispossible()
-	{
-		it = head;
-		for (int i = 0; i < number_of_pieces; i++)
-			if (it->piece.num1 == num_head || it->piece.num1 == num_tail || it->piece.num2 == num_head || it->piece.num2 != num_tail)
-				return 1;
-			it = it->next;
-		return 0;
-	}
-};
-
-class Table : public ListaPecas
-{
-};
-
-int main()
-{
-	Piece a;
-	Piece b;
-	a.num1 = 1;
-	a.num2 = 2;
-	b.num1 = 3;
-	b.num2 = 4;
-	Hand Player[4];
-	Table table;
-	table.initializate();
-	table.push_front(a);
-	table.push_front(b);
-	//table.printList();
-	for (int i = 0; i < 4; i++)
-		Player[i].initializate();
-
-	return 0;
-}
