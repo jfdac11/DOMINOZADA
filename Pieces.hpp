@@ -8,15 +8,32 @@ public:
 	//funcao que cria as pecas
 	void createPieces()
 	{
-		Piece peca;
+		Piece vector[28];
+		Piece piece;
+		int pos = 0;
 		for (int i = 6; i >= 0; i--)
 		{
-			peca.num1 = i;
+			piece.num1 = i;
 			for (int j = i; j >= 0; j--)
 			{
-				peca.num2 = j;
-				push_front(peca);
+				piece.num2 = j;
+				vector[pos] = piece;
+				pos++;
 			}
+		}
+		//randomiza a lista
+		for (int k = 0; k < 200; k++)
+		{
+			Piece aux;
+			int randNum1 = (rand()) % 28;
+			aux = vector[randNum1];
+			int randNum2 = (rand()) % 28;
+			vector[randNum1] = vector[randNum2];
+			vector[randNum2] = aux;
+		}
+		for (int m = 0; m < 28; m++)
+		{
+			push_front(vector[m]);
 		}
 	}
 };
@@ -31,7 +48,7 @@ public:
 			return 1;
 		return 0;
 	}
-	//confere se eh possivel da pessoa jogar a peca na mesa
+	//confere se eh possivel da pessoa jogar a piece na mesa
 	int ispossible()
 	{
 		it = head;
@@ -46,8 +63,7 @@ public:
 class Table : public ListaPecas
 {
 public:
-
-	//sobrecarga da funcao ListaPecas, com verificacao se eh possivel inserir a peca na mesa
+	//sobrecarga da funcao ListaPecas, com verificacao se eh possivel inserir a piece na mesa
 	int push_back(Piece piece)
 	{
 		if (num_tail != piece.num1 && num_tail != piece.num2 && head != NULL)
@@ -78,7 +94,7 @@ public:
 		}
 	}
 
-	//sobrecarga da funcao ListaPecas, com verificacao se eh possivel inserir a peca na mesa
+	//sobrecarga da funcao ListaPecas, com verificacao se eh possivel inserir a piece na mesa
 	int push_front(Piece piece)
 	{
 		if (num_head != piece.num1 && num_head != piece.num2 && head != NULL)

@@ -25,7 +25,6 @@ int main()
 		}
 	}
 	cout << "\n\n";
-	printPlayers(numero_jogadores);
 	system("pause");
 	return 0;
 }
