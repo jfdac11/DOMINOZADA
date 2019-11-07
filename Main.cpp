@@ -1,6 +1,6 @@
 #include "Global.hpp"
 #include "Players.hpp"
-#include "Pieces.hpp"
+//#include "Pieces.hpp"
 
 unsigned int numero_jogadores = 0;
 

@@ -1,8 +1,10 @@
 #include "Global.hpp"
+#include "Pieces.hpp"
 
 typedef struct
 {
 	char nome[50];
+	Hand hand;
 } Player;
 
 Player player[4];
@@ -15,6 +17,7 @@ int createPlayers(int num_players)
 		{
 			cout << "Player " << counter << ": ";
 			cin >> player[counter].nome;
+			player[counter].hand.initializate();
 		}
 		return 1;
 		//vai ter um cava com 14 pecas sorteadas aleatoriamente
