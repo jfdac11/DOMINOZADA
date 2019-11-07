@@ -35,6 +35,7 @@ public:
 		{
 			push_front(vector[m]);
 		}
+		printList();
 	}
 };
 
@@ -57,6 +58,25 @@ public:
 				return 1;
 		it = it->next;
 		return 0;
+	}
+	void printHand(){
+		it = head;
+		while(it != NULL){
+			cout<<it->piece.num1<< "  ";
+			it = it->next;
+		}
+		it = head;
+		cout<<endl;
+		while(it != NULL){
+			cout<<(char)205<< "  ";
+			it = it->next;
+		}
+		it = head;
+		cout<<endl;
+		while(it != NULL){
+			cout<<it->piece.num2<< "  ";
+			it = it->next;
+		}
 	}
 };
 
@@ -124,4 +144,14 @@ public:
 			return 1;
 		}
 	}
+	void printTable(){
+		for(it = head; it != NULL; it = it->next){
+			cout<< it->piece.num1<<"||"<<it->piece.num2<<" ";
+		}
+	}
 };
+
+
+
+
+
