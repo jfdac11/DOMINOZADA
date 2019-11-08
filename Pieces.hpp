@@ -77,6 +77,7 @@ public:
 			cout<<it->piece.num2<< "  ";
 			it = it->next;
 		}
+		cout<<"\n\n";
 	}
 };
 
@@ -146,7 +147,7 @@ public:
 	}
 	void printTable(){
 		for(it = head; it != NULL; it = it->next){
-			cout<< it->piece.num1<<"||"<<it->piece.num2<<" ";
+			cout<< it->piece.num1<<endl<<(char)205<<endl<<it->piece.num2<<"\n\n";
 		}
 	}
 };

@@ -39,6 +39,14 @@ public:
 	Node *it;
 	int number_of_pieces;
 
+	Node* begin(){
+		return head;
+	}
+	
+	Node* end(){
+		return tail;
+	}
+	
 	//funcao que inica a lista
 	void initializate()
 	{
