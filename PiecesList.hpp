@@ -1,6 +1,12 @@
-#include "Global.hpp"
+#include <iostream>
+#include <cstdlib>
+#include <cstdlib>
+#include <cstdio>
+#include <cstdio>
+#include <ctime>
+using namespace std;
 
-int num_head = 0, num_tail = 0;
+//int num_head = 0, num_tail = 0;
 
 //estrutura da peca
 struct Piece
@@ -27,7 +33,7 @@ Node *create_node(Piece piece)
 	return new_node;
 }
 
-//classe da lista de pecas
+//classe mãe das listas de pecas
 class ListaPecas
 {
 protected:
@@ -39,6 +45,15 @@ public:
 	Node *it;
 	int number_of_pieces;
 
+	int size(){
+		int size = 0;
+		it = head;
+		while(it != NULL){
+			size++;
+			it = it->next;
+		}
+		return size;
+	}
 	Node* begin(){
 		return head;
 	}

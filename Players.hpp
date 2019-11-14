@@ -1,4 +1,3 @@
-#include "Global.hpp"
 #include "Pieces.hpp"
 
 typedef struct
@@ -7,7 +6,7 @@ typedef struct
 	Hand hand;
 } Player;
 
-int createPlayers(int num_players, Dig *dig, Player *player)
+void createPlayers(int num_players, Dig *dig, Player *player)
 {
 	for (int counter = 0; counter < num_players; counter++)
 	{
@@ -21,7 +20,6 @@ int createPlayers(int num_players, Dig *dig, Player *player)
 		}
 		player[counter].hand.printHand();
 	}
-		return 1;
 		//vai ter um cava com 14 pecas sorteadas aleatoriamente
 	
 }
