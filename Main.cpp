@@ -61,12 +61,13 @@ int main()
 			break;
 		}
 		int cont = 0;
-		while (cont < numero_jogadores && !player[cont].hand.ispossible(&table))
+		while (dig.size() == 0 && cont < numero_jogadores && !player[cont].hand.ispossible(&table))
 		{
 			cont++;
 		}
 		if (cont == numero_jogadores)
 		{
+			//front do empate
 			break;
 		}
 	}
