@@ -225,22 +225,39 @@ public:
     int turn(Table *table, Dig *dig, char nomePlayer[50])
     {
         int s;
+        bool threw = false;
+
         table->printTable();
-        //se pode jogar alguma peca
+        //se pode jogar alguma pe?a
         if (ispossible(table))
         {
             table->printTable();
             printHand();
             int n = selectPiece(nomePlayer);
             cout << "Digite 1 para inserir acima ou 2 para inserir abaixo\n";
+            cout << dig->size() << endl;
             cin >> s;
-            if (s == 1 && table->push_front(it->piece))
-                removeat(n);
-            if (s == 2 && table->push_back(it->piece))
-                removeat(n);
+            if (s == 1)
+            {
+                if (table->push_front(it->piece))
+                {
+                    removeat(n);
+                    threw = true;
+                }
+            }
+            if (s == 2)
+            {
+                if (table->push_back(it->piece))
+                {
+                    removeat(n);
+                    threw = true;
+                }
+            }
+            if (threw)
+                return 1;
             turn(table, dig, nomePlayer);
         }
-        //se nao pode jogar nenhuma das pecas
+        //se n?o pode jogar nenhuma das pe?as
         else
         {
             //se ainda pode cavar
@@ -250,13 +267,14 @@ public:
                 push_back(dig->it->piece);
                 dig->removeat(0);
                 cout << "Cavou!\n";
+                cout << dig->size() << endl;
                 system("pause");
                 turn(table, dig, nomePlayer);
             }
-            //se nao pode cavar
+            //se n?o pode cavar
             else
             {
-                cout << nomePlayer << " voce perdeu a vez!\n";
+                cout << "Perdeu a vez!\n";
                 system("pause");
                 return 0;
             }
