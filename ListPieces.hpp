@@ -4,9 +4,8 @@
 #include <cstdio>
 #include <cstdio>
 #include <ctime>
-using namespace std;
 
-//int num_head = 0, num_tail = 0;
+using namespace std;
 
 //estrutura da peca
 struct Piece
@@ -33,7 +32,7 @@ Node *create_node(Piece piece)
 	return new_node;
 }
 
-//classe mãe das listas de pecas
+//classe mae das listas de pecas
 class ListaPecas
 {
 protected:
@@ -45,23 +44,27 @@ public:
 	Node *it;
 	int number_of_pieces;
 
-	int size(){
+	int size()
+	{
 		int size = 0;
 		it = head;
-		while(it != NULL){
+		while (it != NULL)
+		{
 			size++;
 			it = it->next;
 		}
 		return size;
 	}
-	Node* begin(){
+	Node *begin()
+	{
 		return head;
 	}
-	
-	Node* end(){
+
+	Node *end()
+	{
 		return tail;
 	}
-	
+
 	//funcao que inica a lista
 	void initializate()
 	{

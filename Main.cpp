@@ -1,4 +1,4 @@
-#include "Players.hpp"
+#include "Game.hpp"
 
 unsigned int numero_jogadores = 0;
 
@@ -10,7 +10,7 @@ int main()
 	dig.createPieces();
 	Table table;
 	table.initializate();
-	cout << "Bem vindo a o DOMINO BRABO\n";
+	drawTitle();
 	system("PAUSE");
 	system("cls");
 	Player player[4];
@@ -31,40 +31,15 @@ int main()
 		}
 	}
 	cout << "\n\n";
-	
-	
-	//testes
-	for(int i=0; true;i++){
-		player[i%numero_jogadores].hand.turn(&table, &dig);
+	for (int i = 0; true; i++)
+	{
+		player[i % numero_jogadores].hand.turn(&table, &dig, player[i % numero_jogadores].nome);
 		table.printTable();
-		if(player[i%numero_jogadores].hand.won()){
-			cout<<"Parabens "<<player[i%numero_jogadores].nome<<", Voce esta muito feliz!";
-			
+		if (player[i % numero_jogadores].hand.won())
+		{
+			cout << "Parabens " << player[i % numero_jogadores].nome << ", Voce esta muito feliz!";
+			break;
 		}
 	}
-	/*
-	system("pause");
-	system("cls");
-	player[0].hand.it = player[0].hand.begin();
-	table.push_back(player[0].hand.it->piece);
-	table.printTable();
-	system("pause");
-	//player[0].hand.it = player[0].hand.it->next;
-	//table.push_back(player[0].hand.it->piece);
-	table.push_back(player[0].hand.it->piece);
-	table.printTable();
-	system("pause");
-	table.push_back(player[0].hand.it->piece);
-	table.printTable();
-	system("pause");
-	table.push_back(player[0].hand.it->piece);
-	table.printTable();
-	system("pause");
-	
-	*/
-	
-	
-	
-	
 	return 0;
 }
