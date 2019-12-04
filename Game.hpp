@@ -34,7 +34,6 @@ public:
         {
             push_front(vector[m]);
         }
-        printList();
     }
 };
 
