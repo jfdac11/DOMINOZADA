@@ -7,6 +7,12 @@
 
 using namespace std;
 
+void ignore_char_cin()
+{
+	cin.clear();
+	return;
+}
+
 //estrutura da peca
 struct Piece
 {
@@ -158,6 +164,18 @@ public:
 			free(it);
 			return 1;
 		}
+	}
+
+	bool has_piece(Piece piece)
+	{
+
+		for (it = head; it != NULL; it = it->next)
+		{
+			cout << "test";
+			if (it->piece.num1 == piece.num1 && it->piece.num2 == piece.num2)
+				return true;
+		}
+		return false;
 	}
 
 	//funcao que imprime a lista

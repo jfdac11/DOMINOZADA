@@ -210,9 +210,13 @@ public:
     }
     int selectPiece(char nomePlayer[50])
     {
-        int n;
+        unsigned int n;
         cout << nomePlayer << " escolha o numero da peca que voce deseja colocar na mesa.\n";
-        cin >> n;
+        do
+        {
+            cin >> n;
+            fflush(stdin);
+        } while (n < 0 || n > this->size() - 1);
         it = head;
         for (int i = 0; i < n; i++)
         {
@@ -220,70 +224,80 @@ public:
         }
         return n;
     }
-    //deveria estar em player, porem player n�o foi feito como classe :(
+};
+
+class Player{
+    public:
+    char nome[50];
+    Hand hand;
+
     int turn(Table *table, Dig *dig, char nomePlayer[50])
     {
-        int s;
+        unsigned int s;
 
         table->printTable();
-        //se pode jogar alguma pe?a
-        if (ispossible(table))
+        //se pode jogar alguma peca
+        if (hand.ispossible(table))
         {
             table->printTable();
-            printHand();
-            int n = selectPiece(nomePlayer);
+            hand.printHand();
+            int n = hand.selectPiece(nomePlayer);
             cout << "Digite 1 para inserir acima ou 2 para inserir abaixo\n";
-            cout << dig->size() << endl;
-            cin >> s;
+            do
+            {
+                ignore_char_cin();
+                cin >> s;
+                fflush(stdin);
+            } while (s > 2 || s < 1);
             if (s == 1)
             {
-                if (table->push_front(it->piece))
+                if (table->push_front(hand.it->piece))
                 {
-                    removeat(n);
+                    hand.removeat(n);
                     return 1;
                 }
             }
             if (s == 2)
             {
-                if (table->push_back(it->piece))
+                if (table->push_back(hand.it->piece))
                 {
-                    removeat(n);
+                    hand.removeat(n);
                     return 1;
                 }
             }
             turn(table, dig, nomePlayer);
         }
-        //se n?o pode jogar nenhuma das pe?as
+        //se nao pode jogar nenhuma das pecas
         else
         {
             //se ainda pode cavar
             if (dig->size() != 0)
             {
                 dig->it = dig->begin();
-                push_back(dig->it->piece);
+                hand.push_back(dig->it->piece);
                 dig->removeat(0);
-                cout << "Cavou!\n";
-                cout << dig->size() << endl;
+                cout << nomePlayer << ", voce teve que cavar!\n";
                 system("pause");
                 turn(table, dig, nomePlayer);
             }
-            //se n?o pode cavar
+            //se nao pode cavar
             else
             {
-                cout << "Perdeu a vez!\n";
+                cout << nomePlayer << "voce teve que passar a vez!\n";
                 system("pause");
                 return 0;
             }
         }
         return 0;
     }
+
 };
 
-typedef struct
-{
-    char nome[50];
-    Hand hand;
-} Player;
+// typedef struct
+// {
+//     char nome[50];
+//     Hand hand;
+// } Player;
 
 void createPlayers(int num_players, Dig *dig, Player *player)
 {
@@ -316,4 +330,5 @@ void drawTitle()
         c = fgetc(arq);
     }
     fclose(arq);
+    cout << "\n\n\n\n\n\n";
 }
