@@ -17,7 +17,7 @@ void ignore_char_cin()
 struct Piece
 {
 	//lados da peca
-	int num1, num2;
+	int num1, num2, index;
 };
 
 //no da lista

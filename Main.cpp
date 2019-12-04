@@ -36,8 +36,8 @@ int main()
 	bool firstTurn = true;
 	bool hasBucha = false;
 	Piece bucha;
-	bucha.num1 = 6;
-	bucha.num2 = 6;
+	bucha.num1 = 7;
+	bucha.num2 = 7;
 	for (int i = 0; true; i++)
 	{
 		if (firstTurn)
@@ -49,15 +49,25 @@ int main()
 				bucha.num2--;
 			}
 			if (!hasBucha)
+			{
 				continue;
+			}
 			else
+			{
+				table.push_back(player[i % numero_jogadores].hand.it->piece);
+				player[i % numero_jogadores].hand.removeat(player[i % numero_jogadores].hand.it->piece.index);
+				table.printTable();
+				cout << player[i % numero_jogadores].nome << " iniciou a partida.\n";
+				system("pause");
 				firstTurn = false;
+				i++;
+			}
 		}
 		player[i % numero_jogadores].turn(&table, &dig, player[i % numero_jogadores].nome);
 		table.printTable();
 		if (player[i % numero_jogadores].hand.won())
 		{
-			cout << "Parabens " << player[i % numero_jogadores].nome << ", Voce esta muito feliz!";
+			cout << "Parabens " << player[i % numero_jogadores].nome << ", voce esta muito feliz!";
 			break;
 		}
 		int cont = 0;

@@ -293,12 +293,6 @@ class Player{
 
 };
 
-// typedef struct
-// {
-//     char nome[50];
-//     Hand hand;
-// } Player;
-
 void createPlayers(int num_players, Dig *dig, Player *player)
 {
     for (int counter = 0; counter < num_players; counter++)
@@ -306,13 +300,13 @@ void createPlayers(int num_players, Dig *dig, Player *player)
         cout << "Player " << counter + 1 << ": ";
         cin >> player[counter].nome;
         player[counter].hand.initializate();
-        for (int i = 0; i < 7; i++)
+        for (int i = 6; i >= 0; i--)
         {
             dig->it = dig->begin();
+            dig->it->piece.index = i;
             player[counter].hand.push_front(dig->it->piece);
             dig->removeat(0);
         }
-        player[counter].hand.printHand();
     }
     //vai ter um cava com 14 pecas sorteadas aleatoriamente
 }
