@@ -171,7 +171,6 @@ public:
 
 		for (it = head; it != NULL; it = it->next)
 		{
-			cout << "test";
 			if (it->piece.num1 == piece.num1 && it->piece.num2 == piece.num2)
 				return true;
 		}
