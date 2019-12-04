@@ -225,7 +225,6 @@ public:
     int turn(Table *table, Dig *dig, char nomePlayer[50])
     {
         int s;
-        bool threw = false;
 
         table->printTable();
         //se pode jogar alguma pe?a
@@ -242,7 +241,7 @@ public:
                 if (table->push_front(it->piece))
                 {
                     removeat(n);
-                    threw = true;
+                    return 1;
                 }
             }
             if (s == 2)
@@ -250,11 +249,9 @@ public:
                 if (table->push_back(it->piece))
                 {
                     removeat(n);
-                    threw = true;
+                    return 1;
                 }
             }
-            if (threw)
-                return 1;
             turn(table, dig, nomePlayer);
         }
         //se n?o pode jogar nenhuma das pe?as

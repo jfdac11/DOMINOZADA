@@ -122,7 +122,9 @@ public:
 		}
 		if (number_of_pieces == 1)
 		{
-			number_of_pieces--;
+			head = NULL;
+			tail = NULL;
+			number_of_pieces = 0;
 			return 1;
 		}
 		if (i == 0)
