@@ -1,9 +1,8 @@
 #include "Game.hpp"
 
-unsigned int numero_jogadores = 0;
-
 int main()
 {
+	unsigned int numero_jogadores = 0;
 	srand(time(NULL));
 	Dig dig;
 	dig.initializate();
@@ -54,19 +53,20 @@ int main()
 			else
 				firstTurn = false;
 		}
-		player[i % numero_jogadores].hand.turn(&table, &dig, player[i % numero_jogadores].nome);
+		player[i % numero_jogadores].turn(&table, &dig, player[i % numero_jogadores].nome);
 		table.printTable();
 		if (player[i % numero_jogadores].hand.won())
 		{
 			cout << "Parabens " << player[i % numero_jogadores].nome << ", Voce esta muito feliz!";
 			break;
 		}
-		int cont=0;
-		while(cont < numero_jogadores && !player[cont].hand.ispossible(&table))
+		int cont = 0;
+		while (cont < numero_jogadores && !player[cont].hand.ispossible(&table))
 		{
 			cont++;
 		}
-		if(cont == numero_jogadores){
+		if (cont == numero_jogadores)
+		{
 			break;
 		}
 	}
