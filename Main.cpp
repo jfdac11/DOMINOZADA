@@ -1,5 +1,7 @@
 #include "Game.hpp"
 
+
+using namespace std;
 int main()
 {
 	unsigned int numero_jogadores = 0;
@@ -68,8 +70,21 @@ int main()
 		if (player[i % numero_jogadores].hand.won())
 		{
 			cout << "Parabens " << player[i % numero_jogadores].nome << ", voce esta muito feliz!";
+		
+			ofstream makefile;
+			makefile.open("config.txt",ios_base::in);
+		
+			if(!cadastro)
+			{
+				makefile.open("C://Vencedores.txt");
+				 /* Se não existe, cria */
+			}
+			makefile << player[i % numero_jogadores].nome;
+			makefile.close();
 			break;
 		}
+		
+		
 		int cont = 0;
 		while (dig.size() == 0 && cont < numero_jogadores && !player[cont].hand.ispossible(&table))
 		{
@@ -80,6 +95,7 @@ int main()
 			//front do empate
 			break;
 		}
-	}
+}
 	return 0;
+    
 }
